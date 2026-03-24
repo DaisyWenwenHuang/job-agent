@@ -1,0 +1,15 @@
+.env
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+dist/
+node_modules/
+backend/data/job_agent.db
+backend/data/browser_profile/
+backend/data/screenshots/
+resume/
+*.pdf
+*.docx
+.DS_Store

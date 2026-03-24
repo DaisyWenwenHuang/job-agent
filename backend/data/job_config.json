@@ -1,0 +1,30 @@
+{
+  "target_roles": [
+    "Data Scientist",
+    "Data Engineer",
+    "ML Engineer",
+    "AI Engineer",
+    "Machine Learning Engineer",
+    "Applied Scientist",
+    "Analytics Engineer"
+  ],
+  "location": {
+    "city": "Redmond",
+    "state": "WA",
+    "max_miles_onsite": 20,
+    "allowed_remote_types": ["remote", "hybrid", "onsite"]
+  },
+  "employment_types": ["full-time", "part-time", "contract", "internship"],
+  "seniority_levels": ["entry", "mid", "senior"],
+  "min_claude_score": 60,
+  "apply_automatically": false,
+  "daily_apply_limit": 20,
+  "platforms": {
+    "linkedin": { "enabled": true, "max_results_per_run": 50 },
+    "indeed":   { "enabled": true, "max_results_per_run": 50 }
+  },
+  "scheduler": {
+    "run_time": "08:00",
+    "timezone": "America/Los_Angeles"
+  }
+}
