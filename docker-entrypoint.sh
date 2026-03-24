@@ -9,14 +9,5 @@ if [ -n "$RESUME_BASE64" ]; then
   echo "[entrypoint] Resume decoded from RESUME_BASE64"
 fi
 
-# Initialize DB
-python scripts/init_db.py
-
-# Seed demo data if DEMO_MODE is set
-if [ "$DEMO_MODE" = "true" ]; then
-  echo "[entrypoint] Seeding demo data..."
-  python scripts/seed_demo_data.py && echo "[entrypoint] Demo seed complete." || echo "[entrypoint] WARNING: Demo seed failed (non-fatal)"
-fi
-
-# Start the server
+# Start the server (DB init and seeding happen inside lifespan)
 exec uvicorn backend.main:app --host 0.0.0.0 --port "${PORT:-8000}"

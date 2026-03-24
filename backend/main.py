@@ -15,6 +15,13 @@ settings = get_settings()
 async def lifespan(app: FastAPI):
     # Startup
     create_tables()
+    import os
+    if os.getenv("DEMO_MODE", "").lower() == "true":
+        try:
+            from scripts.seed_demo_data import seed
+            seed()
+        except Exception as e:
+            print(f"[startup] Demo seed warning: {e}")
     from backend.core.scheduler import start_scheduler
     start_scheduler()
     yield
