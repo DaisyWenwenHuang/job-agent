@@ -45,10 +45,11 @@ async def run_daily_pipeline(trigger: str = "scheduled"):
         total_scraped = 0
 
         # Scrape LinkedIn
-        if config.platforms.get("linkedin", {}).get("enabled", True) if isinstance(config.platforms.get("linkedin"), dict) else getattr(config.platforms.get("linkedin"), "enabled", True):
+        linkedin_cfg = config.platforms.get("linkedin")
+        if linkedin_cfg and linkedin_cfg.enabled:
             try:
                 from backend.scrapers.linkedin import LinkedInScraper
-                max_r = config.platforms["linkedin"].max_results_per_run if hasattr(config.platforms.get("linkedin"), "max_results_per_run") else 50
+                max_r = linkedin_cfg.max_results_per_run
                 scraper = LinkedInScraper()
                 raw_jobs = await scraper.search_jobs(config.target_roles, location, max_r)
                 total_scraped += len(raw_jobs)
@@ -59,10 +60,11 @@ async def run_daily_pipeline(trigger: str = "scheduled"):
                 log(f"[pipeline] LinkedIn scraper failed: {e}")
 
         # Scrape Indeed
-        if config.platforms.get("indeed", {}).get("enabled", True) if isinstance(config.platforms.get("indeed"), dict) else getattr(config.platforms.get("indeed"), "enabled", True):
+        indeed_cfg = config.platforms.get("indeed")
+        if indeed_cfg and indeed_cfg.enabled:
             try:
                 from backend.scrapers.indeed import IndeedScraper
-                max_r = config.platforms["indeed"].max_results_per_run if hasattr(config.platforms.get("indeed"), "max_results_per_run") else 50
+                max_r = indeed_cfg.max_results_per_run
                 scraper = IndeedScraper()
                 raw_jobs = await scraper.search_jobs(config.target_roles, location, max_r)
                 total_scraped += len(raw_jobs)

@@ -7,17 +7,21 @@ _scheduler: AsyncIOScheduler | None = None
 
 def start_scheduler():
     global _scheduler
-    config = get_job_config()
-    hour, minute = config.scheduler.run_time.split(":")
+    try:
+        config = get_job_config()
+        hour, minute = config.scheduler.run_time.split(":")
 
-    _scheduler = AsyncIOScheduler(timezone=config.scheduler.timezone)
-    _scheduler.add_job(
-        _run_pipeline,
-        CronTrigger(hour=int(hour), minute=int(minute), timezone=config.scheduler.timezone),
-        id="daily_pipeline",
-        replace_existing=True,
-    )
-    _scheduler.start()
+        _scheduler = AsyncIOScheduler(timezone=config.scheduler.timezone)
+        _scheduler.add_job(
+            _run_pipeline,
+            CronTrigger(hour=int(hour), minute=int(minute), timezone=config.scheduler.timezone),
+            id="daily_pipeline",
+            replace_existing=True,
+        )
+        _scheduler.start()
+        print(f"[scheduler] Started — daily run at {config.scheduler.run_time} {config.scheduler.timezone}")
+    except Exception as e:
+        print(f"[scheduler] Failed to start: {e}")
 
 
 def stop_scheduler():
