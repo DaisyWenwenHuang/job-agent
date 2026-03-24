@@ -15,8 +15,7 @@ python scripts/init_db.py
 # Seed demo data if DEMO_MODE is set
 if [ "$DEMO_MODE" = "true" ]; then
   echo "[entrypoint] Seeding demo data..."
-  python scripts/seed_demo_data.py
-  echo "[entrypoint] Demo seed complete."
+  python scripts/seed_demo_data.py && echo "[entrypoint] Demo seed complete." || echo "[entrypoint] WARNING: Demo seed failed (non-fatal)"
 fi
 
 # Start the server
